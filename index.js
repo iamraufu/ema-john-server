@@ -24,17 +24,11 @@ client.connect(err => {
 
     app.post('/addProduct', (req, res) => {
         const products = req.body;
-        // productsCollection.insertOne(products)
-        //     .then(result => {
-        //         console.log(result.insertedCount);
-        //         res.send(result.insertedCount)
-        //     })
-        productsCollection.insertMany(products)
+        productsCollection.insertOne(products)
             .then(result => {
                 console.log(result.insertedCount);
-                res.send(200).send(result.insertedCount)
+                res.send(result.insertedCount)
             })
-
     })
 
     app.get('/products', (req, res) => {
@@ -51,13 +45,13 @@ client.connect(err => {
             })
     })
 
-    // app.post('/productsByKeys', (req, res) => {
-    //     const productKeys = req.body;
-    //     productsCollection.find({ key: { $in: productKeys } })
-    //         .toArray((err, documents) => {
-    //             res.send(documents);
-    //         })
-    // })
+    app.post('/productsByKeys', (req, res) => {
+        const productKeys = req.body;
+        productsCollection.find({ key: { $in: productKeys } })
+            .toArray((err, documents) => {
+                res.send(documents);
+            })
+    })
 
     // app.post('/addOrder', (req, res) => {
     //     const order = req.body;
