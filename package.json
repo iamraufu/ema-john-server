@@ -1,7 +1,7 @@
 {
     "name": "ema-john-server",
     "version": "1.0.0",
-    "description": "Amazone clone App - Server Side",
+    "description": "Amazon clone App - Server Side",
     "main": "index.js",
     "scripts": {
         "start": "node index.js",
