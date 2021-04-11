@@ -4,7 +4,6 @@ const cors = require('cors');
 const MongoClient = require('mongodb').MongoClient;
 require('dotenv').config()
 
-
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@raufuprezensinc.hztjo.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 
 
@@ -15,9 +14,12 @@ app.use(cors());
 
 const port = 5000;
 
-
+app.get('/', (req, res) => {
+    res.send("Welcome To EmaJohn Web App!")
+})
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
 client.connect(err => {
     const productsCollection = client.db("emaJohn").collection("products");
     const ordersCollection = client.db("emaJohn").collection("orders");
@@ -32,7 +34,8 @@ client.connect(err => {
     })
 
     app.get('/products', (req, res) => {
-        productsCollection.find({})
+        const search = req.query.search
+        productsCollection.find({ name: { $regex: search } })
             .toArray((err, documents) => {
                 res.send(documents);
             })
